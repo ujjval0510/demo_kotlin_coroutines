@@ -8,7 +8,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
     private val TAG = "MainActivity";
+    // NOTE : If main thread finish his work that means all other thread and coroutines will be cancelled.
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -24,4 +27,5 @@ class MainActivity : AppCompatActivity() {
         // this will run on main thread
         Log.d(TAG, "Hello from main thread :${Thread.currentThread().name} ");
     }
+
 }
