@@ -3,10 +3,8 @@ package com.techfinovation.demo_kotlin_coroutines
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +23,13 @@ class MainActivity : AppCompatActivity() {
         newSingleThreadContext("MyThread) : custom thread **/
 
         GlobalScope.launch(Dispatchers.Default) {
+            val text = doNetworkCall();
+            Log.d(TAG, "Starting coroutines in thread :${Thread.currentThread().name} ");
 
+            withContext(Dispatchers.Main) {
+                Log.d(TAG, "Setting text in thread :${Thread.currentThread().name} ");
+                tv_dummy.text = text
+            }
             delay(3000L)
             /** this will run different thread.**/
             Log.d(TAG, "Coroutines : hello from thread :${Thread.currentThread().name} ");
@@ -36,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    suspend fun doNetworkCall(): String {
+    private suspend fun doNetworkCall(): String {
         delay(3000L)
         return "Network call function with 3sec delay ."
     }
