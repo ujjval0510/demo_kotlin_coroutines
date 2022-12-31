@@ -3,10 +3,7 @@ package com.techfinovation.demo_kotlin_coroutines
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 /** runBlocking **/
 class MainActivity : AppCompatActivity() {
@@ -41,13 +38,29 @@ class MainActivity : AppCompatActivity() {
          * this will use when you don't need coroutines behaviour
          * but still want to use suspend function in your main thread.
          * **/
+
+        Log.d(TAG, "Before runBlocking ....")
         runBlocking {
-            delay(3000L)
+
+            /** we can also launch our coroutine inside the runBlocking method **/
+            /**Both coroutines execute on the same time as we have delay for 3sec in below example.**/
+            launch(Dispatchers.IO) {
+                delay(3000L)
+                Log.d(TAG, "Finished IO Coroutine")
+            }
+
+            launch {
+                delay(3000L)
+                Log.d(TAG, "Finished IO Coroutine 2 ")
+            }
+
+            Log.d(TAG, "Start runBlocking ....")
+
+            delay(5000L)
+
+            Log.d(TAG, "End runBlocking ....")
         }
-
-        /**  this will run on main thread **/
-        Log.d(TAG, "Hello from main thread :${Thread.currentThread().name} ")
-
+        Log.d(TAG, "After runBlocking ....")
     }
 
 }
