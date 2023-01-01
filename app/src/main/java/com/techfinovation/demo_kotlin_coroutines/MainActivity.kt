@@ -1,8 +1,10 @@
 package com.techfinovation.demo_kotlin_coroutines
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,6 +28,11 @@ class MainActivity : AppCompatActivity() {
         }
         // this will run on main thread
         Log.d(TAG, "Hello from main thread :${Thread.currentThread().name} ");
+
+        btnNextActivity.setOnClickListener {
+            startActivity(Intent(this@MainActivity, RetrofitAPICallActivity::class.java))
+        }
+
     }
 
 }
